@@ -1,4 +1,5 @@
 #include "ANString.h"
+#include <cctype>
 
 int ANString::currentCount = 0;
 int ANString::createdCount = 0;
@@ -84,18 +85,21 @@ bool ANString::operator<(const ANString& argStr) {
 
 	for (int i = 0; i < shortestCap; i++)
 	{
-		if (str[i] > argStr.str[i])
+		if (std::tolower(str[i]) > std::tolower(argStr.str[i]))
 		{
 			return false;
 		}
-		else if (str[i] < argStr.str[i])
+		else if (std::tolower(str[i]) < std::tolower(argStr.str[i]))
 		{
 			return true;
 
 		}
 
 	}
-
+	// IF WE GET HERE, ITS THE SAME SO FAR.
+	if (this->end < argStr.end)
+		return true;
+	return false;
 }
 
 
@@ -110,11 +114,11 @@ bool ANString::operator>(const ANString& argStr) {
 
 	for (int i = 0; i < shortestCap; i++)
 	{
-		if (str[i] < argStr.str[i])
+		if (std::tolower(str[i]) < std::tolower(argStr.str[i]))
 		{
 			return false;
 		}
-		else if (str[i] > argStr.str[i])
+		else if (std::tolower(str[i]) > std::tolower(argStr.str[i]))
 		{
 			return true;
 			
@@ -141,19 +145,41 @@ bool ANString::operator==(const ANString& argStr) {
 	
 	for (int i = 0; i < shortestCap; i++)
 	{
-		if (str[i] != argStr.str[i])
+		if (std::tolower(str[i]) != std::tolower(argStr.str[i]))
 		{
 			return false;
 		}
-		else if (str[i] == argStr.str[i])
+		else if (std::tolower(str[i]) == std::tolower(argStr.str[i]))
 		{
-			return true;
+			
 		}
 		
 	}
-	
+	return true;
 }
+bool ANString::operator!=(const ANString& argStr) {
 
+
+	int shortestCap = argStr.cap;
+
+	if (cap < argStr.cap)
+	{
+		shortestCap = cap;
+	}
+
+	for (int i = 0; i < shortestCap; i++)
+	{
+		if (std::tolower(str[i]) != std::tolower(argStr.str[i]))
+		{
+		}
+		else if (std::tolower(str[i]) == std::tolower(argStr.str[i]))
+		{
+			return false;
+		}
+
+	}
+	return true;
+}
 
 ANString ANString::operator=(const ANString& rvalue) {
 	end = rvalue.end;

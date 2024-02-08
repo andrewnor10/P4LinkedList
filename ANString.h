@@ -42,7 +42,12 @@ public:
 			for (int i = 0; i <= string.end; ++i) {
 				string.str[i] = inputWord[i];
 			}
-
+			if (std::ispunct(string.str[string.end - 1]) == 0)
+			{
+				string.str[string.end] = ' ';
+				string.str[string.end - 1] = '\0';
+				string.end -= 1;
+			}
 		}
 		return istrm;
 	}
@@ -50,6 +55,7 @@ public:
 	bool operator<(const ANString& argStr); // less than conditional operator
 	bool operator>(const ANString& argStr); // greater than conditional operator
 	bool operator==(const ANString& argStr); // equal to conditional operator
+	bool operator!=(const ANString& argStr); // not equal to conditional operator
 	
 	int length();
 	int capacity();
