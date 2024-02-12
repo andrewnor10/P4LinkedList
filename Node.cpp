@@ -12,4 +12,5 @@ Node::Node(const ANString str)
 {
 	data = str;
 	next = nullptr;
+	prev = nullptr;
 }

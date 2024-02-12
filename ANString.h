@@ -42,7 +42,7 @@ public:
 			for (int i = 0; i <= string.end; ++i) {
 				string.str[i] = inputWord[i];
 			}
-			if (std::ispunct(string.str[string.end - 1]) == 0)
+			if (std::ispunct(string.str[string.end - 1]) == 1)
 			{
 				string.str[string.end] = ' ';
 				string.str[string.end - 1] = '\0';

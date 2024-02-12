@@ -17,6 +17,9 @@ public:
 	void resetIteration();
 	ANString next();
 	bool hasMore();
+	bool push_Back(ANString str);
+
+	bool testConnections();
 
 	// member data
 
@@ -26,7 +29,7 @@ public:
 	int count;
 
 };
-ostream& operator<<(ostream& ostrm, const ANString& string);
+ostream& operator<<(ostream& ostrm, const DoubleLinkedList& dll);
 
 #endif // !DoubleLinkedList
 
