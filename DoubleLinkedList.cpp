@@ -47,16 +47,17 @@ bool DoubleLinkedList::insert(const ANString& str)
 int getCount()
 {
 
-}
+}*/
 
-ANString next()
+ANString DoubleLinkedList::next()
 {
-
+	it = it->next;
+	return it->data;
 }
-bool hasMore()
+bool DoubleLinkedList::hasMore()
 {
-
-} */
+	return it != nullptr ? true : false;
+} 
 void DoubleLinkedList::resetIteration()
 {
 	it = head;
