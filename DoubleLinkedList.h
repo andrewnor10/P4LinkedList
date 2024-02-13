@@ -26,7 +26,7 @@ public:
 	Node* head;
 	Node* tail;
 	mutable Node* it;
-	int count;
+	static int count;
 
 };
 ostream& operator<<(ostream& ostrm, const DoubleLinkedList& dll);

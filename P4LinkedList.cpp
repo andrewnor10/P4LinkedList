@@ -2,6 +2,7 @@
 //
 
 #include <iostream>
+#include <fstream>
 #include "DoubleLinkedList.h"
 #include "Node.h"
 #include "ANString.h"
@@ -10,10 +11,16 @@ int main()
 {
     DoubleLinkedList dll;
     ANString string;
-    cin >> string;
+    ifstream fin("infile1.txt");
+    
+    while (fin >> string)
+    {
+        dll.push_Back(string);
 
-    dll.push_Back(string);
-    cout << dll;
+    }
+
+   // dll.push_Back(string);
+    cout << dll.count;
 
     return 0;
 }
