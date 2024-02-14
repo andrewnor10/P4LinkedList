@@ -36,36 +36,47 @@ bool DoubleLinkedList::insert(const ANString& str)
 {
 	Node* temp;
 	temp = new Node(str);
-	temp->next = nullptr;
-	
-	this->resetIteration();
-	/*for (; it != nullptr; next())
-	{
 
-		if (temp->data > it->data)
-		{
-
-		}
-	}*/
-	if (head == nullptr)
+	if (head == nullptr) // Do we have any nodes yet?
 	{
-		head = temp;
+		head = tail = temp;
 	}
-	if (temp->data > head->data)
+	else if (temp->data < head->data) // Does our new data go at the head?
 	{
 		head->prev = temp;
 		temp->next = head;
 		head = temp;
 	}
-	if (temp->data < tail->data)
+	else if (temp->data > tail->data) // Does it go at the tail?
 	{
-		(tail)->next = temp;
+		tail->next = temp;
 		temp->prev = tail;
 		tail = temp;
 	}
 
+	else // Ok, where do I go?
+	{
+		it = head->next;
+		while (hasMore())
+		{
+			
+			if (temp->data < it->data)
+			{
+				temp->next = it;
+				temp->prev = it->prev;
+				it->prev = temp;
+				temp->prev->next = temp;
+			}
+			else if (temp->data == it->data)
+			{
+				return false;
+			}
+			next();
+		}
+	}
+
 	count++;
-	return temp;
+	return true;
 	
 }
 /*bool remove(const ANString& str)
@@ -79,8 +90,9 @@ int getCount()
 
 ANString DoubleLinkedList::next()
 {
+	ANString str = it->data;
 	it = it->next;
-	return it->data;
+	return str;
 }
 bool DoubleLinkedList::hasMore()
 {
@@ -100,7 +112,7 @@ bool DoubleLinkedList::push_Back(ANString str)
 	{
 		head = temp;
 	}
-
+	
 	this->tail = temp;
 	count++;
 	return true;
