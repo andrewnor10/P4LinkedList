@@ -74,16 +74,16 @@ ostream& operator<<(ostream& ostrm, const ANString& str) {
 }
 
 bool ANString::operator<(const ANString& argStr) {
-	// TODO: you need to write.
+	
 
-	int shortestCap = argStr.cap;
+	int shortestEnd = argStr.end;
 
-	if (cap < argStr.cap)
+	if (end < argStr.end)
 	{
-		shortestCap = cap;
+		shortestEnd = end;
 	}
 
-	for (int i = 0; i < shortestCap; i++)
+	for (int i = 0; i <= shortestEnd; i++)
 	{
 		if (std::tolower(str[i]) > std::tolower(argStr.str[i]))
 		{
@@ -104,7 +104,6 @@ bool ANString::operator<(const ANString& argStr) {
 
 
 bool ANString::operator>(const ANString& argStr) {
-	//TODO: you need to write.
 	int shortestCap = argStr.end;
 
 	if (end < argStr.end)
@@ -112,7 +111,7 @@ bool ANString::operator>(const ANString& argStr) {
 		shortestCap = end;
 	}
 
-	for (int i = 0; i < shortestCap; i++)
+	for (int i = 0; i <= shortestCap; i++)
 	{
 		if (std::tolower(str[i]) < std::tolower(argStr.str[i]))
 		{
@@ -136,22 +135,18 @@ bool ANString::operator>(const ANString& argStr) {
 bool ANString::operator==(const ANString& argStr) {
 	
 
-	int shortestCap = argStr.cap;
+	int shortestEnd = argStr.end;
 
-	if (cap < argStr.cap)
+	if (end < argStr.end)
 	{
-		shortestCap = cap;
+		shortestEnd = end;
 	}
 	
-	for (int i = 0; i < shortestCap; i++)
+	for (int i = 0; i <= shortestEnd; i++)
 	{
 		if (std::tolower(str[i]) != std::tolower(argStr.str[i]))
 		{
 			return false;
-		}
-		else if (std::tolower(str[i]) == std::tolower(argStr.str[i]))
-		{
-			
 		}
 		
 	}

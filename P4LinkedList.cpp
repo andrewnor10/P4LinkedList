@@ -15,12 +15,17 @@ int main()
     
     while (fin >> string)
     {
-        cout << string << " ";
+        // cout << string << " ";
         dll.insert(string);
         
-        cout << dll.count << endl;
+       // cout << dll.getCount() << endl;
     }
-
+    dll.resetIteration();
+    while (dll.hasMore())
+    {
+        cout << dll.next() << " ";
+    }
+    cout << dll.getCount();
    // dll.push_Back(string);
    
 
