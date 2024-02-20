@@ -14,9 +14,9 @@ public:
 	bool insert(const ANString& str);
 	bool remove(const ANString& str);
 	int getCount();
-	void resetIteration();
-	ANString next();
-	bool hasMore();
+	void resetIteration() const;
+	ANString next() const;
+	bool hasMore() const;
 	bool push_Back(ANString str);
 
 	bool testConnections();
@@ -26,7 +26,7 @@ public:
 	Node* head;
 	Node* tail;
 	mutable Node* it;
-	static int count;
+	int count;
 
 };
 ostream& operator<<(ostream& ostrm, const DoubleLinkedList& dll);

@@ -3,30 +3,38 @@
 #include "ANString.h"
 #include <iostream>
 
-int DoubleLinkedList::count = 0;
 
 DoubleLinkedList::DoubleLinkedList()
 {
 	head = nullptr;
 	tail = nullptr;
 	it = nullptr;
-
+	count = 0;
 }
 DoubleLinkedList::DoubleLinkedList(const DoubleLinkedList& dll) // WIP
 {
-	head = new Node (*dll.head);
-	tail = new Node(*dll.tail);
-	it = head;
-	while (hasMore() && it != tail)
+	head = nullptr;
+	tail = nullptr;
+	count = 0;
+	dll.resetIteration();
+	while (dll.hasMore())
 	{
-		push_Back(dll.it->data);
+		push_Back(dll.next());
 		
 	}
-	count = dll.count;
 }
 
 DoubleLinkedList::~DoubleLinkedList()
 {
+	Node* trailer;
+	resetIteration();
+	while (hasMore())
+	{
+		trailer = it;
+		it = it->next;
+		delete trailer;
+		count--;
+	}
 
 }
 
@@ -61,7 +69,7 @@ bool DoubleLinkedList::insert(const ANString& str)
 
 	else // Ok, where do I go?
 	{
-		it = head->next;
+		it = head;
 		while (hasMore())
 		{
 			
@@ -150,17 +158,17 @@ int DoubleLinkedList::getCount()
 	return count;
 }
 
-ANString DoubleLinkedList::next()
+ANString DoubleLinkedList::next() const
 {
 	ANString str = it->data;
 	it = it->next;
 	return str;
 }
-bool DoubleLinkedList::hasMore()
+bool DoubleLinkedList::hasMore() const
 {
 	return it != nullptr ? true : false;
 } 
-void DoubleLinkedList::resetIteration()
+void DoubleLinkedList::resetIteration() const
 {
 	it = head;
 }
@@ -168,14 +176,18 @@ void DoubleLinkedList::resetIteration()
 bool DoubleLinkedList::push_Back(ANString str)
 {
 	Node* temp;
-	temp = new Node;
-	temp->data = str;
+	temp = new Node(str);
 	if (head == nullptr)
 	{
 		head = temp;
+		tail = temp;
+	}
+	else
+	{
+		tail->next = temp;
+		tail = temp;
 	}
 	
-	this->tail = temp;
 	count++;
 	return true;
 }
@@ -198,7 +210,7 @@ bool DoubleLinkedList::testConnections()
 			}
 		}
 	}
-
+	return true;
 }
 
 ostream& operator<<(ostream& ostrm, const DoubleLinkedList& dll)
