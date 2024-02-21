@@ -1,12 +1,14 @@
 ////
 // Name: Andrew Norton
 // Section: CS 132
-// Program Name: Hello World
+// Program Name: Linked List
 //
-// Description: A brief description of the program.  What does the 
-//  program do (not how it does it: for example, it uses loops)?  Does 
-//  the program get input?  What kind?  What information is output 
-//  from the program and to where (screen or file)
+// Description: A linked list data structure, using ANStrings. List is doubley linked and contains 
+// no duplicates. The list is alphabetically sorted. This program outputs 4 different lists
+// counts at different points to show where in the program it is to console, 
+// as well as the total numberof strings and current # of strings at the end of the program.
+// 
+// Modified list 1 & 2 also output their lists into their own respective output files.
 ////
 
 
@@ -21,19 +23,16 @@ void changer(DoubleLinkedList list);
 
 int main()
 {
-    DoubleLinkedList list1;
-    DoubleLinkedList list2;
+    DoubleLinkedList list1, list2, mod1, mod2;
     ANString string;
     ifstream fin("infile1.txt");
     ifstream fin2;
-
+    ofstream fout("outfile1.txt");
+    ofstream fout2("outfile2.txt");
 
     while (fin >> string)
     {
-        // cout << string << " ";
         list1.insert(string);
-        
-       // cout << dll.getCount() << endl;
     }
     fin.close();
 
@@ -42,17 +41,62 @@ int main()
     {
         list2.insert(string);
     }
-  
+  // Cout 4 lists size with explanation
+    cout << "List 1 size: " << list1.getCount() << ", List 2 size: " << list2.getCount()
+        << ",\n" << "Modified list 1 size: " << mod1.getCount() << ", modified list 2 size: " << mod2.getCount();
+
+    // Start of modified list related code
+    mod1 = list1;
+    mod2 = list2;
+    
+ 
     list2.resetIteration();
     while (list2.hasMore())
     {
-        cout << list2.next() << " ";
-    } // Output all the strings in the ordered list */
+        mod1.remove(list2.it->data);
+        list2.next();
+    }
+    list1.resetIteration();
+    while (list1.hasMore())
+    {
+        mod2.remove(list1.it->data);
+        list1.next();
+    }
 
-    cout << endl << list2.getCount();
+    // Next size check
+    cout << "\nList 1 size: " << list1.getCount() << ", List 2 size: " << list2.getCount()
+        << ",\n" << "Modified list 1 size: " << mod1.getCount() << ", modified list 2 size: " << mod2.getCount();
+
+/*mod1.resetIteration();
+while (mod1.hasMore())
+{
+    cout << mod1.next() << " ";
+} // Debug code to output all the strings as ordered in list */
+
+    changer(mod1);
+    changer(mod2);
    
-   /* changer(list1);
-    cout << list1.getCount(); */
+    // Next size check
+    cout << "\nList 1 size: " << list1.getCount() << ", List 2 size: " << list2.getCount()
+        << ",\n" << "Modified list 1 size: " << mod1.getCount() << ", modified list 2 size: " << mod2.getCount();
+
+    // cout ANString object counts
+    cout << "\nCurrent number of ANString objects: " << ANString::getCurrentCount();
+    cout << "\nTotal number of ANString objects created: " << ANString::getCreatedCount();
+
+    mod1.resetIteration();
+    while (mod1.hasMore())
+    {
+        fout << mod1.next() << " ";
+    }
+    mod2.resetIteration();
+    while (mod2.hasMore())
+    {
+        fout2 << mod2.next() << " ";
+    }
+    fout.close();
+    fout2.close();
+
     return 0;
 }
 void changer(DoubleLinkedList list)
@@ -62,6 +106,6 @@ void changer(DoubleLinkedList list)
 
     list.insert(str);
     list.insert(str1);
-    cout << "Inside changer size is: " << list.getCount() << endl;
+    cout << "\nInside changer size is: " << list.getCount() << endl;
 }
 

@@ -26,13 +26,17 @@ DoubleLinkedList::DoubleLinkedList(const DoubleLinkedList& dll) // WIP
 
 DoubleLinkedList::~DoubleLinkedList()
 {
-	Node* trailer;
-	resetIteration();
+	if (head->next != nullptr)
+		it = head->next;
+	else
+	{
+		delete head;
+		return;
+	}
 	while (hasMore())
 	{
-		trailer = it;
+		delete it->prev;
 		it = it->next;
-		delete trailer;
 		count--;
 	}
 
@@ -40,11 +44,17 @@ DoubleLinkedList::~DoubleLinkedList()
 
 DoubleLinkedList DoubleLinkedList::operator=(const DoubleLinkedList& dll)
 {
-	head = new Node(*dll.head);
-	tail = new Node(*dll.tail);
+	head = nullptr;
+	tail = nullptr;
+	count = 0;
+	dll.resetIteration();
+	while (dll.hasMore())
+	{
+		push_Back(dll.next());
+
+	}
 	it = head;
-	count = dll.count;
-	return (*this);
+	return *this;
 }
 bool DoubleLinkedList::insert(const ANString& str)
 {
@@ -129,6 +139,10 @@ bool DoubleLinkedList::remove(const ANString& str)
 			
 			delete temp;
 		}
+		else
+		{
+			delete tail;
+		}
 	}
 	else
 	{
@@ -142,7 +156,8 @@ bool DoubleLinkedList::remove(const ANString& str)
 				it->next->prev = it->prev;
 				
 				delete temp;
-					
+				count--;
+				return true;
 				}
 			next();
 
@@ -150,7 +165,7 @@ bool DoubleLinkedList::remove(const ANString& str)
 		}
 		return false;
 	}
-
+	count--;
 	return true;
 }
 int DoubleLinkedList::getCount()
@@ -185,6 +200,7 @@ bool DoubleLinkedList::push_Back(ANString str)
 	else
 	{
 		tail->next = temp;
+		temp->prev = tail;
 		tail = temp;
 	}
 	
@@ -218,3 +234,19 @@ ostream& operator<<(ostream& ostrm, const DoubleLinkedList& dll)
 	ostrm << dll.head->data;
 	return ostrm;
 }
+
+/* Console Output
+* 
+List 1 size: 1104, List 2 size: 1040,
+Modified list 1 size: 0, modified list 2 size: 0
+List 1 size: 1104, List 2 size: 1040,
+Modified list 1 size: 759, modified list 2 size: 695
+Inside changer size is: 761
+
+Inside changer size is: 697
+
+List 1 size: 1104, List 2 size: 1040,
+Modified list 1 size: 759, modified list 2 size: 695
+Current number of ANString objects: 3603
+Total number of ANString objects created: 7081664
+*/
